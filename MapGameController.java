@@ -23,12 +23,6 @@ public class MapGameController implements Initializable {
         mapData = new MapData(21, 15, 1, 3, 2, 1, 5);
         chara = new MoveChara(1, 1, mapData);
         mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
-        for(int y=0; y<mapData.getHeight(); y++){
-            for(int x=0; x<mapData.getWidth(); x++){
-                int index = y*mapData.getWidth() + x;
-                mapImageViews[index] = mapData.getImageView(x,y);
-            }
-        }
         drawMap(chara, mapData);
     }
 
@@ -39,7 +33,8 @@ public class MapGameController implements Initializable {
         mapGrid.getChildren().clear();
         for(int y=0; y<mapData.getHeight(); y++){
             for(int x=0; x<mapData.getWidth(); x++){
-                int index = y*mapData.getWidth() + x;
+                int index = y*mapData.getWidth() + x
+                mapImageViews[index] = mapData.getImageView(x,y);
                 if (x==cx && y==cy) {
                     mapGrid.add(c.getCharaImageView(), x, y);
                 } else {
