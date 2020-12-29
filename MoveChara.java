@@ -14,6 +14,8 @@ public class MoveChara {
     private final String pngPathBefore = "png/cat";
     private final String pngPathAfter  = ".png";
 
+    private int[] items = new int[6];
+
     private int posX;
     private int posY;
 
@@ -23,7 +25,7 @@ public class MoveChara {
     private ImageView[] charaImageViews;
     private ImageAnimation[] charaImageAnimations;
 
-	private int charaDirection;
+	  private int charaDirection;
 
     MoveChara(int startX, int startY, MapData mapData){
         this.mapData = mapData;
@@ -59,11 +61,20 @@ public class MoveChara {
         }
     }
 
+    // check the place if there is a pickable item
+      public boolean hasItem (int x, int y){
+          if (mapData.getMap(x,y) >= MapData.TYPE_KEY && mapData.getMap(x,y) <= MapData.TYPE_FISH3) {
+              return true;
+          } else {
+              return false;
+          }
+      }
+
 	// check the place where the cat will go
     public boolean isMovable(int dx, int dy){
         if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_WALL){
             return false;
-        } else if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_SPACE){
+        } else if (mapData.getMap(posX+dx, posY+dy) != MapData.TYPE_WALL){
             return true;
         }
         return false;
@@ -74,8 +85,16 @@ public class MoveChara {
         if (isMovable(dx,dy)){
             posX += dx;
             posY += dy;
+            if (hasItem(posX,posY)) {
+                items[mapData.getMap(posX, posY)]++;
+                //ここで加点機能を定義
+                mapData.setMap(posX, posY, MapData.TYPE_SPACE);
+                mapData.setImageViews();
+            } /*else if (isPuddle(posX, posY)) {
+              //ここで減点機能を定義
+            }*/
             return true;
-        }else {
+        } else {
             return false;
         }
     }
@@ -92,6 +111,16 @@ public class MoveChara {
     // getter: y-positon of the cat
     public int getPosY(){
         return posY;
+    }
+
+    // getter: number of all items the cat currently has
+    public int[] getAllItems(){
+        return items;
+    }
+
+    // getter: number of a type of item the cat currently has
+    public int getItem(int type){
+        return items[type];
     }
 
     // Draw the cat animation
