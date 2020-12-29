@@ -20,7 +20,7 @@ public class MapGameController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        mapData = new MapData(21, 15);
+        mapData = new MapData(21, 15, 1, 3, 2, 1, 5);
         chara = new MoveChara(1, 1, mapData);
         mapImageViews = new ImageView[mapData.getHeight()*mapData.getWidth()];
         for(int y=0; y<mapData.getHeight(); y++){
@@ -53,13 +53,15 @@ public class MapGameController implements Initializable {
     public void keyAction(KeyEvent event){
         KeyCode key = event.getCode(); System.out.println("keycode:"+key);
         if (key == KeyCode.H){
-        	leftButtonAction();
+            leftButtonAction();
         }else if (key == KeyCode.J){
-            downButtonAction(); 
+            downButtonAction();
         }else if (key == KeyCode.K){
             upButtonAction();
         }else if (key == KeyCode.L){
             rightButtonAction();
+        }else if (key == KeyCode.O) {
+            openGoalAction();
         }
     }
 
@@ -93,6 +95,31 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_RIGHT);
         chara.move(1, 0);
         drawMap(chara, mapData);
+    }
+
+    // Operation for opening the goal flag
+    public void openGoalAction () {
+        if (mapData.getMap(chara.getPosX(),chara.getPosY()) == MapData.TYPE_GOAL) {
+            if (isOpenable()) {
+                printAction("OPEN");
+                mapData.setMap(chara.getPosX(),chara.getPosY(),MapData.TYPE_OPEN);
+                mapData.setImageViews();
+                drawMap(chara, mapData);
+                //ここでゴールを定義
+            } else {
+                printAction("OPENING FAIL");
+                //ここで鍵不足メッセージの表示を定義
+            }
+        }
+    }
+
+    // Check if the requirements for opening are met
+    public boolean isOpenable () {
+        if (chara.getItem(MapData.TYPE_KEY) == mapData.getKeys()) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void func1ButtonAction(ActionEvent event) {
