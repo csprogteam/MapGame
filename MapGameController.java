@@ -33,7 +33,7 @@ public class MapGameController implements Initializable {
         mapGrid.getChildren().clear();
         for(int y=0; y<mapData.getHeight(); y++){
             for(int x=0; x<mapData.getWidth(); x++){
-                int index = y*mapData.getWidth() + x
+                int index = y*mapData.getWidth() + x;
                 mapImageViews[index] = mapData.getImageView(x,y);
                 if (x==cx && y==cy) {
                     mapGrid.add(c.getCharaImageView(), x, y);
