@@ -32,19 +32,20 @@ public class MapData {
     private int keys;
 
     MapData(int x, int y, int keys, int fish1s, int fish2s, int fish3s, int puddles){
-        mapImages = new Image[9];
-        mapImageViews = new ImageView[y][x];
+        this.mapImages = new Image[9];
+        this.mapImageViews = new ImageView[y][x];
         for (int i=0; i<9; i++) {
-            mapImages[i] = new Image(mapImageFiles[i]);
+            this.mapImages[i] = new Image(mapImageFiles[i]);
         }
 
-        width = x;
-        height = y;
-        maps = new int[y][x];
+        this.width = x;
+        this.height = y;
+        this.maps = new int[y][x];
 
         fillMap(MapData.TYPE_WALL);
         digMap(1, 3);
         setGoal();
+        this.keys = keys;
         setMultipleItems(MapData.TYPE_KEY, keys);
         setMultipleItems(MapData.TYPE_FISH1, fish1s);
         setMultipleItems(MapData.TYPE_FISH2, fish2s);
