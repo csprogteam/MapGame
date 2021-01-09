@@ -73,6 +73,7 @@ public class MoveChara {
 	// check the place where the cat will go
     public boolean isMovable(int dx, int dy){
         if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_WALL){
+            MapBGM.wall();
             return false;
         } else if (mapData.getMap(posX+dx, posY+dy) != MapData.TYPE_WALL){
             return true;
@@ -85,13 +86,15 @@ public class MoveChara {
         if (isMovable(dx,dy)){
             posX += dx;
             posY += dy;
-            if (hasItem(posX,posY)) {
+            if (hasItem(posX,posY)){
                 items[mapData.getMap(posX, posY)]++;
                 //ここで加点機能を定義
                 mapData.setMap(posX, posY, MapData.TYPE_SPACE);
                 mapData.setImageViews();
+                MapBGM.bouns();
             } /*else if (isPuddle(posX, posY)) {
               //ここで減点機能を定義
+              MapBGM.minus();
             }*/
             return true;
         } else {
