@@ -66,6 +66,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_UP);
         chara.move(0, -1);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operations for going the cat down
@@ -74,6 +75,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_DOWN);
         chara.move(0, 1);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operations for going the cat right
@@ -82,6 +84,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_LEFT);
         chara.move(-1, 0);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operations for going the cat right
@@ -90,6 +93,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_RIGHT);
         chara.move(1, 0);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operation for opening the goal flag
@@ -100,10 +104,12 @@ public class MapGameController implements Initializable {
                 mapData.setMap(chara.getPosX(),chara.getPosY(),MapData.TYPE_OPEN);
                 mapData.setImageViews();
                 drawMap(chara, mapData);
+                MapBGM.goal();
                 //ここでゴールを定義
             } else {
                 printAction("OPENING FAIL");
                 //ここで鍵不足メッセージの表示を定義
+                MapBGM.locked();
             }
         }
     }
@@ -111,6 +117,7 @@ public class MapGameController implements Initializable {
     // Check if the requirements for opening are met
     public boolean isOpenable () {
         if (chara.getItem(MapData.TYPE_KEY) == mapData.getKeys()) {
+            MapBGM.key();
             return true;
         } else {
             return false;
