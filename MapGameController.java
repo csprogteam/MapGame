@@ -1,3 +1,4 @@
+
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
@@ -97,12 +98,16 @@ public class MapGameController implements Initializable {
         if (mapData.getMap(chara.getPosX(),chara.getPosY()) == MapData.TYPE_GOAL) {
             if (isOpenable()) {
                 printAction("OPEN");
-                mapData.setMap(chara.getPosX(),chara.getPosY(),MapData.TYPE_OPEN);
-                mapData.setImageViews();
-                drawMap(chara, mapData);
-                //ここでゴールを定義
+                if (GoalWindow.onOpen()) {
+                    //ゴールをしてOKボタンを押したら実行される
+                    mapData.setMap(chara.getPosX(),chara.getPosY(),MapData.TYPE_OPEN);
+                    mapData.setImageViews();
+                    drawMap(chara, mapData);
+                    //ここでゴールを定義
+                };
             } else {
                 printAction("OPENING FAIL");
+                GoalWindow.onOpenFail();
                 //ここで鍵不足メッセージの表示を定義
             }
         }
@@ -118,12 +123,11 @@ public class MapGameController implements Initializable {
     }
 
     public void func1ButtonAction(ActionEvent event) {
-        System.out.println("func1: Nothing to do");
+        System.out.println("Nothing to do");
     }
 
     // Print actions of user inputs
     public void printAction(String actionString) {
         System.out.println("Action: " + actionString);
     }
-
 }
