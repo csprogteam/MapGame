@@ -15,11 +15,11 @@ public class MapBGM{
     private static AudioClip ac5;
     public static void BGM(){
             try{
-                ac1 = new AudioClip(new File("bgm/BGM1.1.mp3").toURL().toString());
-                ac2 = new AudioClip(new File("bgm/BGM1.2.mp3").toURL().toString());
-                ac3 = new AudioClip(new File("bgm/BGM1.3.mp3").toURL().toString());
-                ac4 = new AudioClip(new File("bgm/BGM1.4.mp3").toURL().toString());
-                ac5 = new AudioClip(new File("bgm/BGM1.5.mp3").toURL().toString());
+                ac1 = new AudioClip(new File("bgm/BGM1.1.mp3").toURI().toString());
+                ac2 = new AudioClip(new File("bgm/BGM1.2.mp3").toURI().toString());
+                ac3 = new AudioClip(new File("bgm/BGM1.3.mp3").toURI().toString());
+                ac4 = new AudioClip(new File("bgm/BGM1.4.mp3").toURI().toString());
+                ac5 = new AudioClip(new File("bgm/BGM1.5.mp3").toURI().toString());
 
                 Random r = new Random();
                 int n = r.nextInt(5);
@@ -65,7 +65,7 @@ public class MapBGM{
 
     public static void walk(){
         try{
-            AudioClip walk = new AudioClip(new File("bgm/1_walk.mp3").toURL().toString());
+            AudioClip walk = new AudioClip(new File("bgm/1_walk.mp3").toURI().toString());
             walk.play();
             walk.setVolume(4);
             walk.setRate(1);
@@ -76,7 +76,7 @@ public class MapBGM{
 
     public static void wall(){
         try{
-            AudioClip wall = new AudioClip(new File("bgm/2_wall.mp3").toURL().toString());
+            AudioClip wall = new AudioClip(new File("bgm/2_wall.mp3").toURI().toString());
             wall.play();
             wall.setVolume(4);
             wall.setRate(1);
@@ -87,7 +87,7 @@ public class MapBGM{
 
     public static void bouns(){
         try{
-            AudioClip bouns = new AudioClip(new File("bgm/3_bouns.mp3").toURL().toString());
+            AudioClip bouns = new AudioClip(new File("bgm/3_bouns.mp3").toURI().toString());
             bouns.play();
             bouns.setVolume(4);
             bouns.setRate(1);
@@ -98,7 +98,7 @@ public class MapBGM{
 
     public static void minus(){
         try{
-            AudioClip minus = new AudioClip(new File("bgm/4_minus.mp3").toURL().toString());
+            AudioClip minus = new AudioClip(new File("bgm/4_minus.mp3").toURI().toString());
             minus.play();
             minus.setVolume(4);
             minus.setRate(1);
@@ -109,7 +109,7 @@ public class MapBGM{
 
     public static void key(){
         try{
-            AudioClip key = new AudioClip(new File("bgm/3_key.mp3").toURL().toString());
+            AudioClip key = new AudioClip(new File("bgm/3_key.mp3").toURI().toString());
             key.play();
             key.setVolume(4);
             key.setRate(1);
@@ -126,8 +126,8 @@ public class MapBGM{
             ac4.stop();
             ac5.stop();
             
-            AudioClip open = new AudioClip(new File("bgm/5_open.mp3").toURL().toString());
-            AudioClip goal = new AudioClip(new File("bgm/6_goal.mp3").toURL().toString());
+            AudioClip open = new AudioClip(new File("bgm/5_open.mp3").toURI().toString());
+            AudioClip goal = new AudioClip(new File("bgm/6_goal.mp3").toURI().toString());
             open.play();
             open.setVolume(4);
             open.setRate(1);
@@ -148,7 +148,7 @@ public class MapBGM{
 
     public static void locked(){
         try{
-            AudioClip locked = new AudioClip(new File("bgm/7_locked.mp3").toURL().toString());
+            AudioClip locked = new AudioClip(new File("bgm/7_locked.mp3").toURI().toString());
             locked.play();
             locked.setVolume(4);
             locked.setRate(1);
@@ -159,7 +159,7 @@ public class MapBGM{
 
     public static void over(){
         try{
-            AudioClip over = new AudioClip(new File("bgm/3_over.mp3").toURL().toString());
+            AudioClip over = new AudioClip(new File("bgm/3_over.mp3").toURI().toString());
             over.play();
             over.setVolume(4);
             over.setRate(1);
