@@ -113,7 +113,7 @@ public class MoveChara {
                 mapData.setMap(posX, posY, MapData.TYPE_SPACE);
                 mapData.setImageViews();
             } else if (isPuddle(posX, posY)) {
-              score = score - 10*items[6];
+              score -= 10;
               MapBGM.minus();
             }
             return true;
