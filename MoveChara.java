@@ -27,6 +27,9 @@ public class MoveChara {
 
 	  private int charaDirection;
 
+    private int score;
+    private int[] sc = {0, 0, 50, 10, 20, 30};
+
     MoveChara(int startX, int startY, MapData mapData){
         this.mapData = mapData;
 
@@ -73,28 +76,49 @@ public class MoveChara {
 	// check the place where the cat will go
     public boolean isMovable(int dx, int dy){
         if (mapData.getMap(posX+dx, posY+dy) == MapData.TYPE_WALL){
+            MapBGM.wall();
             return false;
         } else if (mapData.getMap(posX+dx, posY+dy) != MapData.TYPE_WALL){
             return true;
         }
         return false;
     }
-
+    public boolean isPuddle(int x, int y){
+        if (mapData.getMap(x, y) == MapData.TYPE_PUDDLE){
+            return true;
+        } else if (mapData.getMap(x, posY+y) != MapData.TYPE_PUDDLE){
+            return false;
+        }
+        return false;
+    }
     // move the cat
+
+    public int getScore(){
+      return score;
+    }
+
+    public int setScore(int score){
+      return this.score = score;
+    }
+
     public boolean move(int dx, int dy){
         if (isMovable(dx,dy)){
             posX += dx;
             posY += dy;
             if (hasItem(posX,posY)) {
-                items[mapData.getMap(posX, posY)]++;
-                //ここで加点機能を定義
+                int itemType = mapData.getMap(posX, posY);
+                items[itemType]++;
+                score += sc[itemType];
+                MapBGM.bouns();
                 mapData.setMap(posX, posY, MapData.TYPE_SPACE);
                 mapData.setImageViews();
-            } /*else if (isPuddle(posX, posY)) {
-              //ここで減点機能を定義
-            }*/
+            } else if (isPuddle(posX, posY)) {
+              score = score - 10*items[6];
+              MapBGM.minus();
+            }
             return true;
         } else {
+            score -= 5;
             return false;
         }
     }
