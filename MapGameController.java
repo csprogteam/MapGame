@@ -13,10 +13,16 @@ import javafx.scene.Group;
 import javafx.scene.layout.Pane;
 
 public class MapGameController implements Initializable {
+    public Label scoreLabel;
+    public Label restmovesLabel;
     public MapData mapData;
     public MoveChara chara;
     public GridPane mapGrid;
     public ImageView[] mapImageViews;
+
+    private int mMax = 50;
+    private int moves = 0;
+    private int restmoves = mMax;
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -30,6 +36,8 @@ public class MapGameController implements Initializable {
     public void drawMap(MoveChara c, MapData m){
         int cx = c.getPosX();
         int cy = c.getPosY();
+        scoreLabel.setText("Score: " + c.getScore());
+        restmovesLabel.setText("Moves left: " + restmoves);
         mapGrid.getChildren().clear();
         for(int y=0; y<mapData.getHeight(); y++){
             for(int x=0; x<mapData.getWidth(); x++){
@@ -58,6 +66,14 @@ public class MapGameController implements Initializable {
         }else if (key == KeyCode.O) {
             openGoalAction();
         }
+
+        if ((key == KeyCode.H || key == KeyCode.J || key == KeyCode.K || key == KeyCode.L) &&  restmoves > 0){
+            moves = moves + 1;
+            restmoves -= 1;
+            mMax = restmoves;
+            System.out.println("restmoves " + restmoves + moves);
+        }
+
     }
 
     // Operations for going the cat down
@@ -66,6 +82,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_UP);
         chara.move(0, -1);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operations for going the cat down
@@ -74,6 +91,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_DOWN);
         chara.move(0, 1);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operations for going the cat right
@@ -82,6 +100,7 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_LEFT);
         chara.move(-1, 0);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operations for going the cat right
@@ -90,20 +109,28 @@ public class MapGameController implements Initializable {
         chara.setCharaDirection(MoveChara.TYPE_RIGHT);
         chara.move(1, 0);
         drawMap(chara, mapData);
+        MapBGM.walk();
     }
 
     // Operation for opening the goal flag
     public void openGoalAction () {
         if (mapData.getMap(chara.getPosX(),chara.getPosY()) == MapData.TYPE_GOAL) {
             if (isOpenable()) {
+                MapBGM.goal();
                 printAction("OPEN");
-                mapData.setMap(chara.getPosX(),chara.getPosY(),MapData.TYPE_OPEN);
-                mapData.setImageViews();
-                drawMap(chara, mapData);
+            	 if (GoalWindow.onOpen()) {
+                    int currentScore = chara.getScore();
+                    chara.setScore(currentScore + 200);
+                    mapData.setMap(chara.getPosX(),chara.getPosY(),MapData.TYPE_OPEN);
+                    mapData.setImageViews();
+                    drawMap(chara, mapData);
+            	 }
                 //ここでゴールを定義
             } else {
                 printAction("OPENING FAIL");
                 //ここで鍵不足メッセージの表示を定義
+            	GoalWindow.onOpenFail();
+                MapBGM.locked();
             }
         }
     }
@@ -111,6 +138,7 @@ public class MapGameController implements Initializable {
     // Check if the requirements for opening are met
     public boolean isOpenable () {
         if (chara.getItem(MapData.TYPE_KEY) == mapData.getKeys()) {
+            MapBGM.key();
             return true;
         } else {
             return false;
@@ -125,5 +153,4 @@ public class MapGameController implements Initializable {
     public void printAction(String actionString) {
         System.out.println("Action: " + actionString);
     }
-
 }
